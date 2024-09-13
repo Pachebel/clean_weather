@@ -1,17 +1,19 @@
 import 'package:clean_weather/app/modules/app_module.dart';
 import 'package:clean_weather/app/modules/app_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  final appFactory = AppFactory();
-  final platformApp = appFactory.createPlatformApp(Modular.routerConfig);
+  final factory = AppFactory();
+  final reouterConfig = Modular.routerConfig;
+  final brightness =
+      WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
   return runApp(
     ModularApp(
       module: AppModule(),
-      child: platformApp.createApp(),
+      child: factory.createPlatformApp(reouterConfig, brightness).createApp(),
     ),
   );
 }
