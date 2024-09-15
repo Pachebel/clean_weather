@@ -1,7 +1,7 @@
 import 'package:clean_weather/app/modules/core/services/geolocation/geo_location_service.dart';
+import 'package:clean_weather/app/modules/core/theme/ios_theme.dart';
 import 'package:clean_weather/app/modules/home/home_view.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class IOSHomeView extends IHomeView {
@@ -10,16 +10,20 @@ class IOSHomeView extends IHomeView {
   @override
   Widget build(BuildContext context) {
     // final factory = GeoLocationModalFactory();
+    final appTheme = IOSTheme.instance;
     final service = GeoLocationService();
-    return Scaffold(
-      body: ValueListenableBuilder(
+    return CupertinoPageScaffold(
+      child: ValueListenableBuilder(
         valueListenable: service.permission,
         builder:
             (BuildContext context, LocationPermission? value, Widget? child) {
           switch (value) {
             case null:
-              return const Center(
-                child: CircularProgressIndicator.adaptive(),
+              return Center(
+                child: CupertinoButton(
+                  onPressed: appTheme.changeTheme,
+                  child: const Text('IOA'),
+                ),
               );
             case LocationPermission.deniedForever:
               return CupertinoAlertDialog(

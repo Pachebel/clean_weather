@@ -1,24 +1,32 @@
+// ignore_for_file: prefer_constructors_over_static_methods
+
 import 'package:clean_weather/app/modules/core/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 
 class IOSTheme {
-  IOSTheme() {
-    _init();
+  IOSTheme._();
+  static IOSTheme? _instance;
+
+  static IOSTheme get instance => _instance ??= IOSTheme._();
+
+  void init(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    _theme.value = base(brightness);
   }
 
-  void _init() => theme.value = lightTheme;
+  void changeTheme() {
+    final brightness = _theme.value.brightness == Brightness.light
+        ? Brightness.dark
+        : Brightness.light;
+    _theme.value = base(brightness);
+  }
 
-  final theme = ValueNotifier<CupertinoThemeData>(const CupertinoThemeData());
+  final _theme = ValueNotifier<CupertinoThemeData>(const CupertinoThemeData());
+  ValueNotifier<CupertinoThemeData> get theme => _theme;
 
-  CupertinoThemeData get lightTheme => _base(Brightness.light);
-  CupertinoThemeData get darkTheme => _base(Brightness.dark);
-
-  CupertinoThemeData _base(Brightness brightness) => CupertinoThemeData(
+  CupertinoThemeData base(Brightness brightness) => CupertinoThemeData(
         applyThemeToAll: true,
         primaryColor: primaryColor,
         brightness: brightness,
       );
-
-  CupertinoThemeData changeTheme(Brightness brightness) =>
-      theme.value = _base(brightness);
 }

@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:clean_weather/app/modules/app_factory.dart';
 import 'package:clean_weather/app/modules/home/pages/android_home_view.dart';
 import 'package:clean_weather/app/modules/home/pages/ios_home_view.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +14,9 @@ abstract class IHomeView extends StatelessWidget {
 
 class HomeViewFactory {
   IHomeView buildHomeView() {
-    if (Platform.isAndroid) return const AndroidHomeView();
-    if (Platform.isIOS) return const IOSHomeView();
+    // return const AndroidHomeView();
+    if (isAndroid) return const AndroidHomeView();
+    if (isIOS) return const IOSHomeView();
     throw UnsupportedError('Unsupported platform');
   }
 }
