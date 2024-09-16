@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_constructors_over_static_methods
-import 'package:clean_weather/app/modules/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-class AndroidTheme {
-  AndroidTheme._();
+class AppTheme {
+  AppTheme._();
+  Color get primaryColor => Colors.blue;
 
-  static AndroidTheme? _instance;
+  static AppTheme? _instance;
 
-  static AndroidTheme get instance => _instance ??= AndroidTheme._();
+  static AppTheme get instance => _instance ??= AppTheme._();
 
   void init(BuildContext context) {
     final brightness = MediaQuery.of(context).platformBrightness;

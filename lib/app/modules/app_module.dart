@@ -1,4 +1,4 @@
-import 'package:clean_weather/app/modules/core/services/geolocation/geo_location_service.dart';
+import 'package:clean_weather/app/modules/core/services/geo_location_service.dart';
 import 'package:clean_weather/app/modules/core/services/local_storage_service.dart';
 import 'package:clean_weather/app/modules/home/home_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
