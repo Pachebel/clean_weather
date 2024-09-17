@@ -1,4 +1,4 @@
-import 'package:clean_weather/app/modules/core/theme/theme.dart';
+import 'package:clean_weather/app/modules/core/presenter/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -22,7 +22,7 @@ class AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    theme.theme.dispose();
+    theme.appTheme.dispose();
     super.dispose();
   }
 
@@ -37,7 +37,7 @@ class AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: theme.theme,
+      valueListenable: theme.appTheme,
       builder: (_, ThemeData value, __) => MaterialApp.router(
         theme: value,
         routerConfig: Modular.routerConfig,
