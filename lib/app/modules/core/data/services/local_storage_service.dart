@@ -7,8 +7,8 @@ abstract class LocalStorage {
   Future<bool> write(String key, dynamic value);
 }
 
-class LocalStorageService implements LocalStorage {
-  LocalStorageService() {
+class LocalStorageImpl implements LocalStorage {
+  LocalStorageImpl() {
     _init();
   }
   late final SharedPreferences _sp;

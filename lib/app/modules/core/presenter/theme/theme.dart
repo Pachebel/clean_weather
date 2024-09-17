@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   AppTheme._();
-  Color get primaryColor => Colors.blue;
+  Color get primaryColor => Colors.red;
 
   static AppTheme? _instance;
 
@@ -22,10 +22,10 @@ class AppTheme {
   }
 
   final _theme = ValueNotifier<ThemeData>(ThemeData());
-  ValueNotifier<ThemeData> get theme => _theme;
+  ValueNotifier<ThemeData> get appTheme => _theme;
 
   ThemeData _base(Brightness brightness) => ThemeData(
-        primaryColor: primaryColor,
+        colorSchemeSeed: primaryColor,
         brightness: brightness,
       );
 }

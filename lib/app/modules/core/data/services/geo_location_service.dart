@@ -1,14 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
-abstract class IGeoLocationService {
+abstract class GeoLocationService {
   Future<Position> getCurrentPosition();
   Future<LocationPermission> requestPermission();
   Future<bool> openAppSettings();
   Future<bool> openLocationSettings();
+  ValueNotifier<LocationPermission?> get permission;
 }
 
-class GeoLocationService implements IGeoLocationService {
+class GeoLocationServiceImpl implements GeoLocationService {
+  @override
   final permission = ValueNotifier<LocationPermission?>(null);
 
   @override
