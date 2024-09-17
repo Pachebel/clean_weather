@@ -17,9 +17,6 @@ class _PermissionViewState extends State<PermissionView>
 
   @override
   void initState() {
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   viewModel.requestPermission();
-    // });
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -51,10 +48,10 @@ class _PermissionViewState extends State<PermissionView>
           primaryText: 'Turn on location',
           primaryOnTap: viewModel.requestPermission,
           secondaryText: 'Not now',
-          secondaryOnTap: () {},
+          secondaryOnTap: viewModel.pushToStart,
         );
 
-    Widget buildDenied() => currentWidget = PermissionPageWidget(
+    Widget buildLocationDenied() => currentWidget = PermissionPageWidget(
           icon: Icons.location_off_rounded,
           title: 'Location is turned off',
           description:
@@ -76,10 +73,10 @@ class _PermissionViewState extends State<PermissionView>
               return buildLocationPermission();
 
             case LocationPermission.deniedForever || LocationPermission.denied:
-              return buildDenied();
+              return buildLocationDenied();
 
             case LocationPermission.whileInUse || LocationPermission.always:
-              Modular.to.pushReplacementNamed('./start/');
+              viewModel.pushToStart();
               return currentWidget;
           }
         },

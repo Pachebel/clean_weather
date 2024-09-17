@@ -13,5 +13,8 @@ class PermissionViewModel {
       locationService.requestPermission();
 
   Future<bool> openLocationSettings() => locationService.openLocationSettings();
+
   Future<bool> openAppSettings() => locationService.openAppSettings();
+
+  Future<Object?> pushToStart() => Modular.to.pushReplacementNamed('./start/');
 }
