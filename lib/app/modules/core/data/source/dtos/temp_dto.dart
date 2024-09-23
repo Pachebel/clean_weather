@@ -33,16 +33,14 @@ class TempDto extends TempModel {
           morn: model.morn,
         );
 
-  Map<String, dynamic> toMap() {
-    final data = <String, dynamic>{};
-    data['day'] = day;
-    data['min'] = min;
-    data['max'] = max;
-    data['night'] = night;
-    data['eve'] = eve;
-    data['morn'] = morn;
-    return data;
-  }
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'day': day,
+        'min': min,
+        'max': max,
+        'night': night,
+        'eve': eve,
+        'morn': morn,
+      };
 
   factory TempDto.fromJson(String source) =>
       TempDto.fromMap(json.decode(source) as Map<String, dynamic>);

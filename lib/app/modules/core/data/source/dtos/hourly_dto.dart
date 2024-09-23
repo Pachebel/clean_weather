@@ -25,16 +25,16 @@ class HourlyDto extends HourlyModel {
     return HourlyDto(
       dt: map['dt'] as int?,
       temp: map['temp'] as double?,
-      feelsLike: map['feelsLike'] as double?,
+      feelsLike: map['feels_like'] as double?,
       pressure: map['pressure'] as int?,
       humidity: map['humidity'] as int?,
-      dewPoint: map['dewPoint'] as double?,
+      dewPoint: map['dew_point'] as double?,
       uvi: map['uvi'] as double?,
       clouds: map['clouds'] as int?,
       visibility: map['visibility'] as int?,
-      windSpeed: map['windSpeed'] as double?,
-      windDeg: map['windDeg'] as int?,
-      windGust: map['windGust'] as double?,
+      windSpeed: map['wind_speed'] as double?,
+      windDeg: map['wind_deg'] as int?,
+      windGust: map['wind_gust'] as double?,
       weather: List<Map<String, dynamic>>.from(map['weather'] as List)
           .map(WeatherDto.fromMap)
           .toList(),
@@ -42,24 +42,23 @@ class HourlyDto extends HourlyModel {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    final data = <String, dynamic>{};
-    data['dt'] = dt;
-    data['temp'] = temp;
-    data['feelsLike'] = feelsLike;
-    data['pressure'] = pressure;
-    data['humidity'] = humidity;
-    data['dewPoint'] = dewPoint;
-    data['uvi'] = uvi;
-    data['clouds'] = clouds;
-    data['visibility'] = visibility;
-    data['windSpeed'] = windSpeed;
-    data['windDeg'] = windDeg;
-    data['windGust'] = windGust;
-    data['weather'] = weather?.map((v) => v.toMap()).toList();
-    data['pop'] = pop;
-    return data;
-  }
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'dt': dt,
+        'temp': temp,
+        'feels_like': feelsLike,
+        'pressure': pressure,
+        'humidity': humidity,
+        'dew_point': dewPoint,
+        'uvi': uvi,
+        'clouds': clouds,
+        'visibility': visibility,
+        'wind_speed': windSpeed,
+        'wind_deg': windDeg,
+        'wind_gust': windGust,
+        'weather':
+            weather?.map((e) => WeatherDto.fromModel(e).toMap()).toList(),
+        'pop': pop,
+      };
 
   HourlyDto.fromModel(HourlyModel model)
       : super(
@@ -75,7 +74,7 @@ class HourlyDto extends HourlyModel {
           windSpeed: model.windSpeed,
           windDeg: model.windDeg,
           windGust: model.windGust,
-          weather: model.weather?.map(WeatherDto.fromWeather).toList(),
+          weather: model.weather,
           pop: model.pop,
         );
 

@@ -19,14 +19,12 @@ class FeelsLikeDto extends FeelsLikeModel {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    final data = <String, dynamic>{};
-    data['day'] = day;
-    data['night'] = night;
-    data['eve'] = eve;
-    data['morn'] = morn;
-    return data;
-  }
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'day': day,
+        'night': night,
+        'eve': eve,
+        'morn': morn,
+      };
 
   FeelsLikeDto.fromModel(FeelsLikeModel model)
       : super(
