@@ -44,26 +44,24 @@ class CurrentWeatherDto extends CurrentWeatherModel {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    final data = <String, dynamic>{};
-    data['dt'] = dt;
-    data['sunrise'] = sunrise;
-    data['sunset'] = sunset;
-    data['temp'] = temp;
-    data['feelsLike'] = feelsLike;
-    data['pressure'] = pressure;
-    data['humidity'] = humidity;
-    data['dewPoint'] = dewPoint;
-    data['uvi'] = uvi;
-    data['clouds'] = clouds;
-    data['visibility'] = visibility;
-    data['windSpeed'] = windSpeed;
-    data['windDeg'] = windDeg;
-    data['windGust'] = windGust;
-    data['weather'] =
-        weather?.map((v) => WeatherDto.fromModel(v).toMap()).toList();
-    return data;
-  }
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'dt': dt,
+        'sunrise': sunrise,
+        'sunset': sunset,
+        'temp': temp,
+        'feels_like': feelsLike,
+        'pressure': pressure,
+        'humidity': humidity,
+        'dew_point': dewPoint,
+        'uvi': uvi,
+        'clouds': clouds,
+        'visibility': visibility,
+        'wind_speed': windSpeed,
+        'wind_deg': windDeg,
+        'wind_gust': windGust,
+        'weather':
+            weather?.map((e) => WeatherDto.fromModel(e).toMap()).toList(),
+      };
 
   CurrentWeatherDto.fromModel(CurrentWeatherModel model)
       : super(

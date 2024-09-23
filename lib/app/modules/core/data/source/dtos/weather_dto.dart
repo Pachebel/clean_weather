@@ -14,14 +14,12 @@ class WeatherDto extends WeatherModel {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    final data = <String, dynamic>{};
-    data['id'] = id;
-    data['main'] = main;
-    data['description'] = description;
-    data['icon'] = icon;
-    return data;
-  }
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'id': id,
+        'main': main,
+        'description': description,
+        'icon': icon,
+      };
 
   WeatherDto.fromModel(WeatherModel model)
       : super(

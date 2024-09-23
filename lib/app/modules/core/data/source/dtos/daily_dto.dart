@@ -65,14 +65,14 @@ class DailyDto extends DailyModel {
         'moonPhase': moonPhase,
         'summary': summary,
         'temp': temp != null ? TempDto.fromModel(temp!) : null,
-        'feelsLike':
+        'feels_like':
             feelsLike != null ? FeelsLikeDto.fromModel(feelsLike!) : null,
         'pressure': pressure,
         'humidity': humidity,
-        'dewPoint': dewPoint,
-        'windSpeed': windSpeed,
-        'windDeg': windDeg,
-        'windGust': windGust,
+        'dew_point': dewPoint,
+        'wind_speed': windSpeed,
+        'wind_deg': windDeg,
+        'wind_gust': windGust,
         'weather':
             weather?.map((v) => WeatherDto.fromModel(v).toMap()).toList(),
         'clouds': clouds,

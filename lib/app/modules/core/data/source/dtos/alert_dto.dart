@@ -23,8 +23,6 @@ class AlertDto extends AlertModel {
     );
   }
 
-// TODO: ver de novo todos os toMap e deixar nesse padrao
-// de acordo com o que se recebe da api
   Map<String, dynamic> toMap() => <String, dynamic>{
         'sender_name': senderName,
         'event': event,

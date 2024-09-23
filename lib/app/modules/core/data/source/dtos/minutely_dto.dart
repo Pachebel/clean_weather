@@ -12,12 +12,10 @@ class MinutelyDto extends MinutelyModel {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    final data = <String, dynamic>{};
-    data['dt'] = dt;
-    data['precipitation'] = precipitation;
-    return data;
-  }
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'dt': dt,
+        'precipitation': precipitation,
+      };
 
   MinutelyDto.fromModel(MinutelyModel model)
       : super(

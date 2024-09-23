@@ -25,7 +25,7 @@ class WeatherDataDto extends WeatherDataModel {
       lat: map['lat'] as double?,
       lon: map['lon'] as double?,
       timezone: map['timezone'] as String?,
-      timezoneOffset: map['timezoneOffset'] as int?,
+      timezoneOffset: map['timezone_offset'] as int?,
       current:
           CurrentWeatherDto.fromMap(map['current'] as Map<String, dynamic>),
       minutely: List<Map<String, dynamic>>.from(map['minutely'] as List)
@@ -43,21 +43,19 @@ class WeatherDataDto extends WeatherDataModel {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    final data = <String, dynamic>{};
-    data['lat'] = lat;
-    data['lon'] = lon;
-    data['timezone'] = timezone;
-    data['timezoneOffset'] = timezoneOffset;
-    data['current'] =
-        current != null ? CurrentWeatherDto.fromCurrentWeather(current!) : null;
-    // TODO: Fix this line
-    data['minutely'] = minutely?.map((v) => v()).toList();
-    data['hourly'] = hourly?.map((v) => v.toMap()).toList();
-    data['daily'] = daily?.map((v) => v.toMap()).toList();
-    data['alerts'] = alerts?.map((v) => v.toMap()).toList();
-    return data;
-  }
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'lat': lat,
+        'lon': lon,
+        'timezone': timezone,
+        'timezone_offset': timezoneOffset,
+        'current':
+            current != null ? CurrentWeatherDto.fromModel(current!) : null,
+        'minutely':
+            minutely?.map((e) => MinutelyDto.fromModel(e).toMap()).toList(),
+        'hourly': hourly?.map((e) => HourlyDto.fromModel(e).toMap()).toList(),
+        'daily': daily?.map((e) => DailyDto.fromModel(e).toMap()).toList(),
+        'alerts': alerts?.map((e) => AlertDto.fromModel(e).toMap()).toList(),
+      };
 
   WeatherDataDto.fromModel(WeatherDataModel model)
       : super(
