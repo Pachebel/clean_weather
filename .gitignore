@@ -41,3 +41,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+lib/app/modules/core/data/config/consts/weather_key.dart

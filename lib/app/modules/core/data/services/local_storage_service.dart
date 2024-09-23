@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class LocalStorage {
+abstract interface class LocalStorage {
   Future<void> clear();
   Future<void> delete(String key);
   Future<String?> read(String key);

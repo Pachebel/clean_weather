@@ -1,3 +1,4 @@
+import 'package:clean_weather/app/modules/core/data/api/api.dart';
 import 'package:clean_weather/app/modules/core/data/services/geo_location_service.dart';
 import 'package:clean_weather/app/modules/core/data/services/local_storage_service.dart';
 import 'package:clean_weather/app/modules/permission/permission_module.dart';
@@ -10,6 +11,7 @@ class AppModule extends Module {
     // global services
     i
       ..addLazySingleton<LocalStorage>(LocalStorageImpl.new)
+      ..addLazySingleton<ApiRequest>(ApiRequestImpl.new)
       ..addLazySingleton<GeoLocationService>(GeoLocationServiceImpl.new);
   }
 

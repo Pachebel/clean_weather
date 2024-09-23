@@ -1,7 +1,13 @@
 class WeatherModel {
-  WeatherModel(this.id, this.name, this.age);
-
   final int? id;
-  final String? name;
-  final int? age;
+  final String? main;
+  final String? description;
+  final String? icon;
+
+  WeatherModel({
+    this.id,
+    this.main,
+    this.description,
+    this.icon,
+  });
 }

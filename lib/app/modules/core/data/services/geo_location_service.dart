@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
-abstract class GeoLocationService {
+abstract interface class GeoLocationService {
   Future<Position> getCurrentPosition();
   Future<LocationPermission> requestPermission();
   Future<bool> openAppSettings();
