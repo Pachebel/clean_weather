@@ -7,6 +7,7 @@ abstract interface class GeoLocationService {
   Future<bool> openAppSettings();
   Future<bool> openLocationSettings();
   ValueNotifier<LocationPermission?> get permission;
+  ValueNotifier<Position?> get position;
 }
 
 class GeoLocationServiceImpl implements GeoLocationService {
@@ -14,8 +15,11 @@ class GeoLocationServiceImpl implements GeoLocationService {
   final permission = ValueNotifier<LocationPermission?>(null);
 
   @override
+  final position = ValueNotifier<Position?>(null);
+
+  @override
   Future<Position> getCurrentPosition() async =>
-      Geolocator.getCurrentPosition();
+      position.value = await Geolocator.getCurrentPosition();
 
   @override
   Future<LocationPermission> requestPermission() async =>

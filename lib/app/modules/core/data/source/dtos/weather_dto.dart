@@ -7,7 +7,7 @@ class WeatherDto extends WeatherModel {
 
   factory WeatherDto.fromMap(Map<String, dynamic> map) {
     return WeatherDto(
-      id: map['id'] as int?,
+      id: int.tryParse(map['id'].toString()),
       main: map['main'] as String?,
       description: map['description'] as String?,
       icon: map['icon'] as String?,

@@ -7,8 +7,8 @@ class MinutelyDto extends MinutelyModel {
 
   factory MinutelyDto.fromMap(Map<String, dynamic> map) {
     return MinutelyDto(
-      dt: map['dt'] as int?,
-      precipitation: map['precipitation'] as double?,
+      dt: int.tryParse(map['dt'].toString()),
+      precipitation: double.tryParse(map['precipitation'].toString()),
     );
   }
 

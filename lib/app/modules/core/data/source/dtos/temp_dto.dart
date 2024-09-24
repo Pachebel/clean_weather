@@ -14,12 +14,12 @@ class TempDto extends TempModel {
 
   factory TempDto.fromMap(Map<String, dynamic> map) {
     return TempDto(
-      day: map['day'] as double?,
-      min: map['min'] as double?,
-      max: map['max'] as double?,
-      night: map['night'] as double?,
-      eve: map['eve'] as double?,
-      morn: map['morn'] as double?,
+      day: double.tryParse(map['day'].toString()),
+      min: double.tryParse(map['min'].toString()),
+      max: double.tryParse(map['max'].toString()),
+      night: double.tryParse(map['night'].toString()),
+      eve: double.tryParse(map['eve'].toString()),
+      morn: double.tryParse(map['morn'].toString()),
     );
   }
 

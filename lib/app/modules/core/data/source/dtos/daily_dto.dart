@@ -31,29 +31,34 @@ class DailyDto extends DailyModel {
 
   factory DailyDto.fromMap(Map<String, dynamic> map) {
     return DailyDto(
-      dt: map['dt'] as int?,
-      sunrise: map['sunrise'] as int?,
-      sunset: map['sunset'] as int?,
-      moonrise: map['moonrise'] as int?,
-      moonset: map['moonset'] as int?,
-      moonPhase: map['moon_phase'] as double?,
+      dt: int.tryParse(map['dt'].toString()),
+      sunrise: int.tryParse(map['sunrise'].toString()),
+      sunset: int.tryParse(map['sunset'].toString()),
+      moonrise: int.tryParse(map['moonrise'].toString()),
+      moonset: int.tryParse(map['moonset'].toString()),
+      moonPhase: double.tryParse(map['moon_phase'].toString()),
       summary: map['summary'] as String?,
-      temp: TempDto.fromMap(map['temp'] as Map<String, dynamic>),
-      feelsLike:
-          FeelsLikeDto.fromMap(map['feels_like'] as Map<String, dynamic>),
-      pressure: map['pressure'] as int?,
-      humidity: map['humidity'] as int?,
-      dewPoint: map['dew_point'] as double?,
-      windSpeed: map['wind_speed'] as double?,
+      temp: map['temp'] != null
+          ? TempDto.fromMap(map['temp'] as Map<String, dynamic>)
+          : null,
+      feelsLike: map['feels_like'] != null
+          ? FeelsLikeDto.fromMap(map['feels_like'] as Map<String, dynamic>)
+          : null,
+      pressure: int.tryParse(map['pressure'].toString()),
+      humidity: int.tryParse(map['humidity'].toString()),
+      dewPoint: double.tryParse(map['dew_point'].toString()),
+      windSpeed: double.tryParse(map['wind_speed'].toString()),
       windDeg: map['wind_deg'] as int?,
-      windGust: map['wind_gust'] as double?,
-      weather: List<Map<String, dynamic>>.from(map['weather'] as List)
-          .map(WeatherDto.fromMap)
-          .toList(),
-      clouds: map['clouds'] as int?,
-      pop: map['pop'] as double?,
-      rain: map['rain'] as double?,
-      uvi: map['uvi'] as double?,
+      windGust: double.tryParse(map['wind_gust'].toString()),
+      weather: map['weather'] != null
+          ? List<Map<String, dynamic>>.from(map['weather'] as List)
+              .map(WeatherDto.fromMap)
+              .toList()
+          : null,
+      clouds: int.tryParse(map['clouds'].toString()),
+      pop: double.tryParse(map['pop'].toString()),
+      rain: double.tryParse(map['rain'].toString()),
+      uvi: double.tryParse(map['uvi'].toString()),
     );
   }
 

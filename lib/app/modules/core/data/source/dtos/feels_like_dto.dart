@@ -12,10 +12,10 @@ class FeelsLikeDto extends FeelsLikeModel {
 
   factory FeelsLikeDto.fromMap(Map<String, dynamic> map) {
     return FeelsLikeDto(
-      day: map['day'] as double?,
-      night: map['night'] as double?,
-      eve: map['eve'] as double?,
-      morn: map['morn'] as double?,
+      day: double.tryParse(map['day'].toString()),
+      night: double.tryParse(map['night'].toString()),
+      eve: double.tryParse(map['eve'].toString()),
+      morn: double.tryParse(map['morn'].toString()),
     );
   }
 

@@ -24,23 +24,25 @@ class CurrentWeatherDto extends CurrentWeatherModel {
 
   factory CurrentWeatherDto.fromMap(Map<String, dynamic> map) {
     return CurrentWeatherDto(
-      dt: map['dt'] as int?,
-      sunrise: map['sunrise'] as int?,
-      sunset: map['sunset'] as int?,
-      temp: map['temp'] as double?,
-      feelsLike: map['feels_like'] as double?,
-      pressure: map['pressure'] as int?,
-      humidity: map['humidity'] as int?,
-      dewPoint: map['dew_point'] as double?,
-      uvi: map['uvi'] as double?,
-      clouds: map['clouds'] as int?,
-      visibility: map['visibility'] as int?,
-      windSpeed: map['wind_speed'] as double?,
-      windDeg: map['wind_deg'] as int?,
-      windGust: map['wind_gust'] as double?,
-      weather: List<Map<String, dynamic>>.from(map['weather'] as List)
-          .map(WeatherDto.fromMap)
-          .toList(),
+      dt: int.tryParse(map['dt'].toString()),
+      sunrise: int.tryParse(map['sunrise'].toString()),
+      sunset: int.tryParse(map['sunset'].toString()),
+      temp: double.tryParse(map['temp'].toString()),
+      feelsLike: double.tryParse(map['feels_like'].toString()),
+      pressure: int.tryParse(map['pressure'].toString()),
+      humidity: int.tryParse(map['humidity'].toString()),
+      dewPoint: double.tryParse(map['dew_point'].toString()),
+      uvi: double.tryParse(map['uvi'].toString()),
+      clouds: int.tryParse(map['clouds'].toString()),
+      visibility: int.tryParse(map['visibility'].toString()),
+      windSpeed: double.tryParse(map['wind_speed'].toString()),
+      windDeg: int.tryParse(map['wind_deg'].toString()),
+      windGust: double.tryParse(map['wind_gust'].toString()),
+      weather: map['weather'] != null
+          ? List<Map<String, dynamic>>.from(map['weather'] as List)
+              .map(WeatherDto.fromMap)
+              .toList()
+          : null,
     );
   }
 

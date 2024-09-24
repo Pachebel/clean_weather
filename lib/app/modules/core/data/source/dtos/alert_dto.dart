@@ -16,10 +16,12 @@ class AlertDto extends AlertModel {
     return AlertDto(
       senderName: map['sender_name'] as String?,
       event: map['event'] as String?,
-      start: map['start'] as int?,
-      end: map['end'] as int?,
+      start: int.tryParse(map['start'].toString()),
+      end: int.tryParse(map['end'].toString()),
       description: map['description'] as String?,
-      tags: List<String>.from(map['tags'] as List<dynamic>),
+      tags: map['tags'] != null
+          ? List<String>.from(map['tags'] as List<dynamic>)
+          : null,
     );
   }
 

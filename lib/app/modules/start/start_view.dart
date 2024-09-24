@@ -10,19 +10,28 @@ class StartView extends StatefulWidget {
 }
 
 class _StartViewState extends State<StartView> {
-  final viewModel = Modular.get<StartViewModel>();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+  final StartViewModel viewModel = Modular.get<StartViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('StartView'),
+    // TODO(pachebel): implement error handling
+    return Scaffold(
+      body: ValueListenableBuilder(
+        builder: (context, value, child) {
+          return viewModel.weekForecast.value == null
+              ? const Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemCount: viewModel.weekForecast.value?.daily?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final weather = viewModel.weekForecast.value?.daily?[index];
+                    return ListTile(
+                      title: Text(weather?.weather?.first.description ?? ''),
+                      subtitle: Text(weather?.temp?.day.toString() ?? ''),
+                    );
+                  },
+                );
+        },
+        valueListenable: viewModel.weekForecast,
       ),
     );
   }

@@ -13,9 +13,9 @@ class LocalWeatherRepositoryImpl implements WeatherRepository {
     final today = DateTime.now();
     final data = await _storage.read(StorageKeys.weekForecastKey(today));
     if (data != null) return WeatherDataDto.fromJson(data);
+    throw const FormatException();
   }
 
-// TODO: revisar saporra
   Future<void> saveWeekForecast(WeatherDataDto response) async {
     final today = DateTime.now();
     await _storage.write(StorageKeys.weekForecastKey(today), response.toJson());

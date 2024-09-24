@@ -14,8 +14,8 @@ class RemoteWeatherRepositoryImpl implements WeatherRepository {
     final lon = position.longitude;
 
     try {
-      final response = await api.get<WeatherDataDto>(
-        url: '/onecall',
+      final response = await api.get(
+        url: 'onecall',
         queryParameters: {
           'lat': lat,
           'lon': lon,
@@ -23,8 +23,10 @@ class RemoteWeatherRepositoryImpl implements WeatherRepository {
           'appid': WeatherApiKey.apiKey,
         },
       );
-
-      return response!;
+      if (response is Map<String, dynamic>) {
+        return WeatherDataDto.fromMap(response);
+      }
+      throw Exception(response);
     } on DioException catch (_) {
       rethrow;
     }

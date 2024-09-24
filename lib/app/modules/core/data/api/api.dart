@@ -1,7 +1,27 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+// request states for the api
+sealed class RequestState {
+  const RequestState();
+}
+
+class RequestStateLoading extends RequestState {
+  const RequestStateLoading();
+}
+
+class RequestStateSuccess extends RequestState {
+  const RequestStateSuccess(this.data);
+  final dynamic data;
+}
+
+class RequestStateError extends RequestState {
+  const RequestStateError(this.error);
+  final dynamic error;
+}
 
 abstract class ApiRequest {
-  Future<T?> get<T>({
+  Future<dynamic> get({
     required String url,
     Map<String, dynamic>? queryParameters,
   });
@@ -11,20 +31,20 @@ abstract class ApiRequest {
 }
 
 class ApiRequestImpl implements ApiRequest {
-  ApiRequestImpl(this.dio, {this.options}) {
+  ApiRequestImpl({this.options}) {
     if (options != null) dio.options = options!;
   }
 
-  final Dio dio;
+  final dio = Modular.get<Dio>();
   final BaseOptions? options;
 
   @override
-  Future<T?> get<T>({
+  Future<dynamic> get({
     required String url,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      final response = await dio.get<T>(
+      final response = await dio.get<dynamic>(
         url,
         queryParameters: queryParameters,
       );

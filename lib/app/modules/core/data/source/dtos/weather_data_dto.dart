@@ -22,24 +22,33 @@ class WeatherDataDto extends WeatherDataModel {
 
   factory WeatherDataDto.fromMap(Map<String, dynamic> map) {
     return WeatherDataDto(
-      lat: map['lat'] as double?,
-      lon: map['lon'] as double?,
+      lat: double.tryParse(map['lat'].toString()),
+      lon: double.tryParse(map['lon'].toString()),
       timezone: map['timezone'] as String?,
-      timezoneOffset: map['timezone_offset'] as int?,
-      current:
-          CurrentWeatherDto.fromMap(map['current'] as Map<String, dynamic>),
-      minutely: List<Map<String, dynamic>>.from(map['minutely'] as List)
-          .map(MinutelyDto.fromMap)
-          .toList(),
-      hourly: List<Map<String, dynamic>>.from(map['hourly'] as List)
-          .map(HourlyDto.fromMap)
-          .toList(),
-      daily: List<Map<String, dynamic>>.from(map['daily'] as List)
-          .map(DailyDto.fromMap)
-          .toList(),
-      alerts: List<Map<String, dynamic>>.from(map['alerts'] as List)
-          .map(AlertDto.fromMap)
-          .toList(),
+      timezoneOffset: int.tryParse(map['timezone_offset'].toString()),
+      current: map['current'] != null
+          ? CurrentWeatherDto.fromMap(map['current'] as Map<String, dynamic>)
+          : null,
+      minutely: map['minutely'] != null
+          ? List<Map<String, dynamic>>.from(map['minutely'] as List)
+              .map(MinutelyDto.fromMap)
+              .toList()
+          : null,
+      hourly: map['hourly'] != null
+          ? List<Map<String, dynamic>>.from(map['hourly'] as List)
+              .map(HourlyDto.fromMap)
+              .toList()
+          : null,
+      daily: map['daily'] != null
+          ? List<Map<String, dynamic>>.from(map['daily'] as List)
+              .map(DailyDto.fromMap)
+              .toList()
+          : null,
+      alerts: map['alerts'] != null
+          ? List<Map<String, dynamic>>.from(map['alerts'] as List)
+              .map(AlertDto.fromMap)
+              .toList()
+          : null,
     );
   }
 
