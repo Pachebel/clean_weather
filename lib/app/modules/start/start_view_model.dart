@@ -5,9 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class StartViewModel {
-  StartViewModel() {
-    _getWeekForecast();
-  }
   final weatherRepository = Modular.get<WeatherRepository>();
   final positionService = Modular.get<GeoLocationService>();
 
@@ -15,7 +12,7 @@ class StartViewModel {
 
   ValueNotifier<WeatherDataModel?> get weekForecast => _weekForecast;
 
-  Future<void> _getWeekForecast() async {
+  Future<void> getWeekForecast() async {
     final position = positionService.position.value ??
         await positionService.getCurrentPosition();
     final forecast = await weatherRepository.getWeekForecast(position);

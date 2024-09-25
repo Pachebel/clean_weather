@@ -13,6 +13,12 @@ class _StartViewState extends State<StartView> {
   final StartViewModel viewModel = Modular.get<StartViewModel>();
 
   @override
+  void initState() {
+    viewModel.getWeekForecast();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // TODO(pachebel): implement error handling
     return Scaffold(
@@ -20,15 +26,19 @@ class _StartViewState extends State<StartView> {
         builder: (context, value, child) {
           return viewModel.weekForecast.value == null
               ? const Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                  itemCount: viewModel.weekForecast.value?.daily?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    final weather = viewModel.weekForecast.value?.daily?[index];
-                    return ListTile(
-                      title: Text(weather?.weather?.first.description ?? ''),
-                      subtitle: Text(weather?.temp?.day.toString() ?? ''),
-                    );
-                  },
+              : RefreshIndicator(
+                  onRefresh: viewModel.getWeekForecast,
+                  child: ListView.builder(
+                    itemCount: viewModel.weekForecast.value?.daily?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final weather =
+                          viewModel.weekForecast.value?.daily?[index];
+                      return ListTile(
+                        title: Text(weather?.weather?.first.description ?? ''),
+                        subtitle: Text(weather?.temp?.day.toString() ?? ''),
+                      );
+                    },
+                  ),
                 );
         },
         valueListenable: viewModel.weekForecast,
