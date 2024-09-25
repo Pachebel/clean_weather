@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_weather/app/modules/core/data/extensions/dto_parsing_extension.dart';
 import 'package:clean_weather/app/modules/core/data/extensions/map_parsing_extension.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/feels_like_dto.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/temp_dto.dart';

@@ -1,25 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-// request states for the api
-sealed class RequestState {
-  const RequestState();
-}
-
-class RequestStateLoading extends RequestState {
-  const RequestStateLoading();
-}
-
-class RequestStateSuccess extends RequestState {
-  const RequestStateSuccess(this.data);
-  final dynamic data;
-}
-
-class RequestStateError extends RequestState {
-  const RequestStateError(this.error);
-  final dynamic error;
-}
-
 abstract class ApiRequest {
   Future<dynamic> get({
     required String url,
