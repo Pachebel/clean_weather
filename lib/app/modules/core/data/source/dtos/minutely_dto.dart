@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_weather/app/modules/core/data/extensions/map_parsing_extension.dart';
 import 'package:clean_weather/app/modules/core/domain/models/minutely_model.dart';
 
 class MinutelyDto extends MinutelyModel {
@@ -7,8 +8,8 @@ class MinutelyDto extends MinutelyModel {
 
   factory MinutelyDto.fromMap(Map<String, dynamic> map) {
     return MinutelyDto(
-      dt: int.tryParse(map['dt'].toString()),
-      precipitation: double.tryParse(map['precipitation'].toString()),
+      dt: map.parseInt('dt'),
+      precipitation: map.parseDouble('precipitation'),
     );
   }
 

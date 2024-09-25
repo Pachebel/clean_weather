@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:clean_weather/app/modules/core/data/extensions/dto_parsing_extension.dart';
+import 'package:clean_weather/app/modules/core/data/extensions/map_parsing_extension.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/weather_dto.dart';
 import 'package:clean_weather/app/modules/core/domain/models/current_weather_model.dart';
 
@@ -24,25 +26,21 @@ class CurrentWeatherDto extends CurrentWeatherModel {
 
   factory CurrentWeatherDto.fromMap(Map<String, dynamic> map) {
     return CurrentWeatherDto(
-      dt: int.tryParse(map['dt'].toString()),
-      sunrise: int.tryParse(map['sunrise'].toString()),
-      sunset: int.tryParse(map['sunset'].toString()),
-      temp: double.tryParse(map['temp'].toString()),
-      feelsLike: double.tryParse(map['feels_like'].toString()),
-      pressure: int.tryParse(map['pressure'].toString()),
-      humidity: int.tryParse(map['humidity'].toString()),
-      dewPoint: double.tryParse(map['dew_point'].toString()),
-      uvi: double.tryParse(map['uvi'].toString()),
-      clouds: int.tryParse(map['clouds'].toString()),
-      visibility: int.tryParse(map['visibility'].toString()),
-      windSpeed: double.tryParse(map['wind_speed'].toString()),
-      windDeg: int.tryParse(map['wind_deg'].toString()),
-      windGust: double.tryParse(map['wind_gust'].toString()),
-      weather: map['weather'] != null
-          ? List<Map<String, dynamic>>.from(map['weather'] as List)
-              .map(WeatherDto.fromMap)
-              .toList()
-          : null,
+      dt: map.parseInt('dt'),
+      sunrise: map.parseInt('sunrise'),
+      sunset: map.parseInt('sunset'),
+      temp: map.parseDouble('temp'),
+      feelsLike: map.parseDouble('feels_like'),
+      pressure: map.parseInt('pressure'),
+      humidity: map.parseInt('humidity'),
+      dewPoint: map.parseDouble('dew_point'),
+      uvi: map.parseDouble('uvi'),
+      clouds: map.parseInt('clouds'),
+      visibility: map.parseInt('visibility'),
+      windSpeed: map.parseDouble('wind_speed'),
+      windDeg: map.parseInt('wind_deg'),
+      windGust: map.parseDouble('wind_gust'),
+      weather: map.parseWeatherList('weather'),
     );
   }
 

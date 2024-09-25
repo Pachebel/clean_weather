@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_weather/app/modules/core/data/extensions/map_parsing_extension.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/feels_like_dto.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/temp_dto.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/weather_dto.dart';
@@ -31,26 +32,26 @@ class DailyDto extends DailyModel {
 
   factory DailyDto.fromMap(Map<String, dynamic> map) {
     return DailyDto(
-      dt: int.tryParse(map['dt'].toString()),
-      sunrise: int.tryParse(map['sunrise'].toString()),
-      sunset: int.tryParse(map['sunset'].toString()),
-      moonrise: int.tryParse(map['moonrise'].toString()),
-      moonset: int.tryParse(map['moonset'].toString()),
-      moonPhase: double.tryParse(map['moon_phase'].toString()),
-      summary: map['summary'] as String?,
+      dt: map.parseInt('dt'),
+      sunrise: map.parseInt('sunrise'),
+      sunset: map.parseInt('sunset'),
+      moonrise: map.parseInt('moonrise'),
+      moonset: map.parseInt('moonset'),
+      moonPhase: map.parseDouble('moon_phase'),
+      summary: map.parseString('summary'),
       temp: map.parseTemp(),
       feelsLike: map.parseFeelsLike(),
-      pressure: int.tryParse(map['pressure'].toString()),
-      humidity: int.tryParse(map['humidity'].toString()),
-      dewPoint: double.tryParse(map['dew_point'].toString()),
-      windSpeed: double.tryParse(map['wind_speed'].toString()),
-      windDeg: int.tryParse(map['wind_deg'].toString()),
-      windGust: double.tryParse(map['wind_gust'].toString()),
-      weather: map.parseWeather(),
-      clouds: int.tryParse(map['clouds'].toString()),
-      pop: double.tryParse(map['pop'].toString()),
-      rain: double.tryParse(map['rain'].toString()),
-      uvi: double.tryParse(map['uvi'].toString()),
+      pressure: map.parseInt('pressure'),
+      humidity: map.parseInt('humidity'),
+      dewPoint: map.parseDouble('dew_point'),
+      windSpeed: map.parseDouble('wind_speed'),
+      windDeg: map.parseInt('wind_deg'),
+      windGust: map.parseDouble('wind_gust'),
+      weather: map.parseWeatherList('weather'),
+      clouds: map.parseInt('clouds'),
+      pop: map.parseDouble('pop'),
+      rain: map.parseDouble('rain'),
+      uvi: map.parseDouble('uvi'),
     );
   }
 
@@ -109,7 +110,8 @@ class DailyDto extends DailyModel {
   String toJson() => json.encode(toMap());
 }
 
-extension MapParsing on Map<String, dynamic> {
+// Local extension to parse nested data
+extension on Map<String, dynamic> {
   TempDto? parseTemp() {
     final tempData = this['temp'];
     if (tempData == null) return null;
@@ -120,14 +122,6 @@ extension MapParsing on Map<String, dynamic> {
     final feelsLikeData = this['feels_like'];
     if (feelsLikeData == null) return null;
     return FeelsLikeDto.fromMap(_parseJsonIfString(feelsLikeData));
-  }
-
-  List<WeatherDto>? parseWeather() {
-    final weatherData = this['weather'];
-    if (weatherData == null) return null;
-    return List<Map<String, dynamic>>.from(weatherData as List)
-        .map(WeatherDto.fromMap)
-        .toList();
   }
 
   static Map<String, dynamic> _parseJsonIfString(dynamic data) {

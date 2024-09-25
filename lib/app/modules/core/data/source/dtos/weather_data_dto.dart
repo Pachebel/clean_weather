@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_weather/app/modules/core/data/extensions/map_parsing_extension.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/alert_dto.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/current_weather_dto.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/daily_dto.dart';
@@ -22,33 +23,15 @@ class WeatherDataDto extends WeatherDataModel {
 
   factory WeatherDataDto.fromMap(Map<String, dynamic> map) {
     return WeatherDataDto(
-      lat: double.tryParse(map['lat'].toString()),
-      lon: double.tryParse(map['lon'].toString()),
-      timezone: map['timezone'] as String?,
-      timezoneOffset: int.tryParse(map['timezone_offset'].toString()),
-      current: map['current'] != null
-          ? CurrentWeatherDto.fromMap(map['current'] as Map<String, dynamic>)
-          : null,
-      minutely: map['minutely'] != null
-          ? List<Map<String, dynamic>>.from(map['minutely'] as List)
-              .map(MinutelyDto.fromMap)
-              .toList()
-          : null,
-      hourly: map['hourly'] != null
-          ? List<Map<String, dynamic>>.from(map['hourly'] as List)
-              .map(HourlyDto.fromMap)
-              .toList()
-          : null,
-      daily: map['daily'] != null
-          ? List<Map<String, dynamic>>.from(map['daily'] as List)
-              .map(DailyDto.fromMap)
-              .toList()
-          : null,
-      alerts: map['alerts'] != null
-          ? List<Map<String, dynamic>>.from(map['alerts'] as List)
-              .map(AlertDto.fromMap)
-              .toList()
-          : null,
+      lat: map.parseDouble('lat'),
+      lon: map.parseDouble('lon'),
+      timezone: map.parseString('timezone'),
+      timezoneOffset: map.parseInt('timezone_offset'),
+      current: map.parseCurrentWeather('current'),
+      minutely: map.parseMinutelyList('minutely'),
+      hourly: map.parseHourlyList('hourly'),
+      daily: map.parseDailyList('daily'),
+      alerts: map.parseAlertList('alerts'),
     );
   }
 
@@ -83,4 +66,49 @@ class WeatherDataDto extends WeatherDataModel {
       WeatherDataDto.fromMap(json.decode(source) as Map<String, dynamic>);
 
   String toJson() => json.encode(toMap());
+}
+
+extension on Map<String, dynamic> {
+  CurrentWeatherDto? parseCurrentWeather(String key) {
+    if (this[key] != null) {
+      return CurrentWeatherDto.fromMap(this[key] as Map<String, dynamic>);
+    }
+    return null;
+  }
+
+  List<MinutelyDto>? parseMinutelyList(String key) {
+    if (this[key] != null) {
+      return List<Map<String, dynamic>>.from(this[key] as List)
+          .map(MinutelyDto.fromMap)
+          .toList();
+    }
+    return null;
+  }
+
+  List<HourlyDto>? parseHourlyList(String key) {
+    if (this[key] != null) {
+      return List<Map<String, dynamic>>.from(this[key] as List)
+          .map(HourlyDto.fromMap)
+          .toList();
+    }
+    return null;
+  }
+
+  List<DailyDto>? parseDailyList(String key) {
+    if (this[key] != null) {
+      return List<Map<String, dynamic>>.from(this[key] as List)
+          .map(DailyDto.fromMap)
+          .toList();
+    }
+    return null;
+  }
+
+  List<AlertDto>? parseAlertList(String key) {
+    if (this[key] != null) {
+      return List<Map<String, dynamic>>.from(this[key] as List)
+          .map(AlertDto.fromMap)
+          .toList();
+    }
+    return null;
+  }
 }

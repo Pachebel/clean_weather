@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_weather/app/modules/core/data/extensions/map_parsing_extension.dart';
 import 'package:clean_weather/app/modules/core/domain/models/weather_model.dart';
 
 class WeatherDto extends WeatherModel {
@@ -7,10 +8,10 @@ class WeatherDto extends WeatherModel {
 
   factory WeatherDto.fromMap(Map<String, dynamic> map) {
     return WeatherDto(
-      id: int.tryParse(map['id'].toString()),
-      main: map['main'] as String?,
-      description: map['description'] as String?,
-      icon: map['icon'] as String?,
+      id: map.parseInt('id'),
+      main: map.parseString('main'),
+      description: map.parseString('description'),
+      icon: map.parseString('icon'),
     );
   }
 

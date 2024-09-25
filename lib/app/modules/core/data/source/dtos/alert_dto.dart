@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_weather/app/modules/core/data/extensions/map_parsing_extension.dart';
 import 'package:clean_weather/app/modules/core/domain/models/alert_model.dart';
 
 class AlertDto extends AlertModel {
@@ -14,14 +15,12 @@ class AlertDto extends AlertModel {
 
   factory AlertDto.fromMap(Map<String, dynamic> map) {
     return AlertDto(
-      senderName: map['sender_name'] as String?,
-      event: map['event'] as String?,
-      start: int.tryParse(map['start'].toString()),
-      end: int.tryParse(map['end'].toString()),
-      description: map['description'] as String?,
-      tags: map['tags'] != null
-          ? List<String>.from(map['tags'] as List<dynamic>)
-          : null,
+      senderName: map.parseString('sender_name'),
+      event: map.parseString('event'),
+      start: map.parseInt('start'),
+      end: map.parseInt('end'),
+      description: map.parseString('description'),
+      tags: map.parseStringList('tags'),
     );
   }
 

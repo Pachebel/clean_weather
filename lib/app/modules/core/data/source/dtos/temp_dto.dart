@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_weather/app/modules/core/data/extensions/map_parsing_extension.dart';
 import 'package:clean_weather/app/modules/core/domain/models/temp_model.dart';
 
 class TempDto extends TempModel {
@@ -14,12 +15,12 @@ class TempDto extends TempModel {
 
   factory TempDto.fromMap(Map<String, dynamic> map) {
     return TempDto(
-      day: double.tryParse(map['day'].toString()),
-      min: double.tryParse(map['min'].toString()),
-      max: double.tryParse(map['max'].toString()),
-      night: double.tryParse(map['night'].toString()),
-      eve: double.tryParse(map['eve'].toString()),
-      morn: double.tryParse(map['morn'].toString()),
+      day: map.parseDouble('day'),
+      min: map.parseDouble('min'),
+      max: map.parseDouble('max'),
+      night: map.parseDouble('night'),
+      eve: map.parseDouble('eve'),
+      morn: map.parseDouble('morn'),
     );
   }
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_weather/app/modules/core/data/extensions/map_parsing_extension.dart';
 import 'package:clean_weather/app/modules/core/domain/models/feels_like_model.dart';
 
 class FeelsLikeDto extends FeelsLikeModel {
@@ -12,10 +13,10 @@ class FeelsLikeDto extends FeelsLikeModel {
 
   factory FeelsLikeDto.fromMap(Map<String, dynamic> map) {
     return FeelsLikeDto(
-      day: double.tryParse(map['day'].toString()),
-      night: double.tryParse(map['night'].toString()),
-      eve: double.tryParse(map['eve'].toString()),
-      morn: double.tryParse(map['morn'].toString()),
+      day: map.parseDouble('day'),
+      night: map.parseDouble('night'),
+      eve: map.parseDouble('eve'),
+      morn: map.parseDouble('morn'),
     );
   }
 
