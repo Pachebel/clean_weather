@@ -38,23 +38,15 @@ class DailyDto extends DailyModel {
       moonset: int.tryParse(map['moonset'].toString()),
       moonPhase: double.tryParse(map['moon_phase'].toString()),
       summary: map['summary'] as String?,
-      temp: map['temp'] != null
-          ? TempDto.fromMap(map['temp'] as Map<String, dynamic>)
-          : null,
-      feelsLike: map['feels_like'] != null
-          ? FeelsLikeDto.fromMap(map['feels_like'] as Map<String, dynamic>)
-          : null,
+      temp: map.parseTemp(),
+      feelsLike: map.parseFeelsLike(),
       pressure: int.tryParse(map['pressure'].toString()),
       humidity: int.tryParse(map['humidity'].toString()),
       dewPoint: double.tryParse(map['dew_point'].toString()),
       windSpeed: double.tryParse(map['wind_speed'].toString()),
-      windDeg: map['wind_deg'] as int?,
+      windDeg: int.tryParse(map['wind_deg'].toString()),
       windGust: double.tryParse(map['wind_gust'].toString()),
-      weather: map['weather'] != null
-          ? List<Map<String, dynamic>>.from(map['weather'] as List)
-              .map(WeatherDto.fromMap)
-              .toList()
-          : null,
+      weather: map.parseWeather(),
       clouds: int.tryParse(map['clouds'].toString()),
       pop: double.tryParse(map['pop'].toString()),
       rain: double.tryParse(map['rain'].toString()),
@@ -115,4 +107,33 @@ class DailyDto extends DailyModel {
       DailyDto.fromMap(json.decode(source) as Map<String, dynamic>);
 
   String toJson() => json.encode(toMap());
+}
+
+extension MapParsing on Map<String, dynamic> {
+  TempDto? parseTemp() {
+    final tempData = this['temp'];
+    if (tempData == null) return null;
+    return TempDto.fromMap(_parseJsonIfString(tempData));
+  }
+
+  FeelsLikeDto? parseFeelsLike() {
+    final feelsLikeData = this['feels_like'];
+    if (feelsLikeData == null) return null;
+    return FeelsLikeDto.fromMap(_parseJsonIfString(feelsLikeData));
+  }
+
+  List<WeatherDto>? parseWeather() {
+    final weatherData = this['weather'];
+    if (weatherData == null) return null;
+    return List<Map<String, dynamic>>.from(weatherData as List)
+        .map(WeatherDto.fromMap)
+        .toList();
+  }
+
+  static Map<String, dynamic> _parseJsonIfString(dynamic data) {
+    if (data is String) {
+      return json.decode(data) as Map<String, dynamic>;
+    }
+    return data as Map<String, dynamic>;
+  }
 }

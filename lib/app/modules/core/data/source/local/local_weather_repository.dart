@@ -12,7 +12,9 @@ class LocalWeatherRepositoryImpl implements WeatherRepository {
   Future<WeatherDataDto> getWeekForecast(Position position) async {
     final today = DateTime.now();
     final data = await _storage.read(StorageKeys.weekForecastKey(today));
+
     if (data != null) return WeatherDataDto.fromJson(data);
+
     throw const FormatException();
   }
 
