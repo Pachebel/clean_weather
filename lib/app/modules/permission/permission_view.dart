@@ -17,6 +17,7 @@ class _PermissionViewState extends State<PermissionView>
 
   @override
   void initState() {
+    viewModel.checkPermission();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -30,7 +31,7 @@ class _PermissionViewState extends State<PermissionView>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      viewModel.requestPermission();
+      viewModel.checkPermission();
     }
     super.didChangeAppLifecycleState(state);
   }

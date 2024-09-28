@@ -68,6 +68,7 @@ class WeatherDataDto extends WeatherDataModel {
   String toJson() => json.encode(toMap());
 }
 
+// Local extension to parse nested data
 extension on Map<String, dynamic> {
   CurrentWeatherDto? parseCurrentWeather(String key) {
     if (this[key] != null) {

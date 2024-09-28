@@ -27,11 +27,11 @@ class LocalStorageImpl implements LocalStorage {
 
   @override
   Future<bool> write(String key, dynamic val) async {
-    if (val is bool) return _sp.setBool(key, val);
+    if (val is List<String>) return _sp.setStringList(key, val);
     if (val is String) return _sp.setString(key, val);
+    if (val is bool) return _sp.setBool(key, val);
     if (val is int) return _sp.setInt(key, val);
     if (val is double) return _sp.setDouble(key, val);
-    if (val is List<String>) return _sp.setStringList(key, val);
     throw ArgumentError('Unsupported value type');
   }
 }

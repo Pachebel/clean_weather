@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 abstract interface class GeoLocationService {
   Future<Position> getCurrentPosition();
   Future<LocationPermission> requestPermission();
+  Future<LocationPermission> checkPermission();
   Future<bool> openAppSettings();
   Future<bool> openLocationSettings();
   ValueNotifier<LocationPermission?> get permission;
@@ -30,4 +31,8 @@ class GeoLocationServiceImpl implements GeoLocationService {
 
   @override
   Future<bool> openLocationSettings() => Geolocator.openLocationSettings();
+
+  @override
+  Future<LocationPermission> checkPermission() async =>
+      Geolocator.checkPermission();
 }

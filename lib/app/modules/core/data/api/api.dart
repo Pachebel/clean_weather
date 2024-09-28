@@ -57,7 +57,7 @@ class ApiRequestImpl implements ApiRequest {
 
   @override
   Future<dynamic> delete(String url) async {
-    try {
+    try { 
       final response = await dio.delete<dynamic>(url);
       return response.data;
     } on DioException catch (_) {

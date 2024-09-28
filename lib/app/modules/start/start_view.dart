@@ -22,26 +22,32 @@ class _StartViewState extends State<StartView> {
   Widget build(BuildContext context) {
     // TODO(pachebel): implement error handling
     return Scaffold(
-      body: ValueListenableBuilder(
-        builder: (context, value, child) {
-          return viewModel.weekForecast.value == null
-              ? const Center(child: CircularProgressIndicator())
-              : RefreshIndicator(
-                  onRefresh: viewModel.getWeekForecast,
-                  child: ListView.builder(
-                    itemCount: viewModel.weekForecast.value?.daily?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      final weather =
-                          viewModel.weekForecast.value?.daily?[index];
-                      return ListTile(
-                        title: Text(weather?.weather?.first.description ?? ''),
-                        subtitle: Text(weather?.temp?.day.toString() ?? ''),
-                      );
+      body: SafeArea(
+        child: ValueListenableBuilder(
+          builder: (context, value, child) {
+            return viewModel.weekForecast.value == null
+                ? const Center(child: CircularProgressIndicator.adaptive())
+                : RefreshIndicator.adaptive(
+                    onRefresh: () async {
+                      await Future<void>.delayed(const Duration(seconds: 1));
+                      return viewModel.getWeekForecast();
                     },
-                  ),
-                );
-        },
-        valueListenable: viewModel.weekForecast,
+                    child: ListView.builder(
+                      itemCount: viewModel.weekForecast.value?.daily?.length,
+                      itemBuilder: (context, index) {
+                        final weather =
+                            viewModel.weekForecast.value?.daily?[index];
+                        return ListTile(
+                          title:
+                              Text(weather?.weather?.first.description ?? ''),
+                          subtitle: Text(weather?.temp?.day.toString() ?? ''),
+                        );
+                      },
+                    ),
+                  );
+          },
+          valueListenable: viewModel.weekForecast,
+        ),
       ),
     );
   }

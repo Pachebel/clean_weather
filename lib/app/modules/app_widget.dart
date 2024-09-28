@@ -13,9 +13,9 @@ class AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
   final theme = AppTheme.instance;
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      theme.init(context);
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => theme.init(context),
+    );
 
     super.initState();
   }
@@ -38,7 +38,7 @@ class AppWidgetState extends State<AppWidget> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: theme.appTheme,
-      builder: (_, ThemeData value, __) => MaterialApp.router(
+      builder: (_, value, __) => MaterialApp.router(
         theme: value,
         routerConfig: Modular.routerConfig,
       ),
