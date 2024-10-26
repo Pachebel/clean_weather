@@ -1,3 +1,4 @@
+import 'package:clean_weather/app/modules/core/data/api/api_response.dart';
 import 'package:clean_weather/app/modules/core/data/config/consts/weather_key.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/weather_data_dto.dart';
 import 'package:clean_weather/app/modules/core/data/source/weather_repository.dart';
@@ -9,12 +10,14 @@ class RemoteWeatherRepositoryImpl implements WeatherRepository {
   final WeatherApiRequest api;
 
   @override
-  Future<WeatherDataDto> getWeekForecast(Position position) async {
+  Stream<ApiResponse<WeatherDataDto>> getWeekForecast(
+    Position position,
+  ) async* {
     final lat = position.latitude;
     final lon = position.longitude;
 
     try {
-      final response = await api.get(
+      yield* api.get<WeatherDataDto>(
         url: 'onecall',
         queryParameters: {
           'lat': lat,
@@ -23,10 +26,6 @@ class RemoteWeatherRepositoryImpl implements WeatherRepository {
           'appid': WeatherApiKey.apiKey,
         },
       );
-      if (response is Map<String, dynamic>) {
-        return WeatherDataDto.fromMap(response);
-      }
-      throw Exception(response);
     } on DioException catch (_) {
       rethrow;
     }

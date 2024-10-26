@@ -1,5 +1,7 @@
-import 'package:clean_weather/app/modules/core/data/api/api.dart';
+import 'package:clean_weather/app/modules/core/data/api/api_request.dart';
+import 'package:clean_weather/app/modules/core/data/api/api_response.dart';
 import 'package:clean_weather/app/modules/core/data/config/consts/weather_api.dart';
+import 'package:clean_weather/app/modules/core/data/source/dtos/weather_data_dto.dart';
 import 'package:clean_weather/app/modules/core/data/source/local/local_weather_repository.dart';
 import 'package:clean_weather/app/modules/core/data/source/remote/remote_weather_repository.dart';
 import 'package:clean_weather/app/modules/core/domain/models/weather_data_model.dart';
@@ -15,7 +17,7 @@ class WeatherApiRequest extends ApiRequestImpl {
 }
 
 abstract interface class WeatherRepository {
-  Future<WeatherDataModel> getWeekForecast(Position position);
+  Stream<ApiResponse<WeatherDataDto>> getWeekForecast(Position position);
   Future<WeatherDataModel> getDayForecast(Position position);
 }
 
@@ -25,13 +27,18 @@ class WeatherRepositoryImpl implements WeatherRepository {
   final LocalWeatherRepositoryImpl local;
 
   @override
-  Future<WeatherDataModel> getWeekForecast(Position position) async {
+  Stream<ApiResponse<WeatherDataDto>> getWeekForecast(
+    Position position,
+  ) async* {
     try {
-      return await local.getWeekForecast(position);
+      yield* local.getWeekForecast(position);
     } on FormatException catch (_) {
-      final response = await remote.getWeekForecast(position);
-      await local.saveWeekForecast(response);
-      return response;
+      final response = remote.getWeekForecast(position)
+        ..listen((event) async {
+          if (event.data != null) await local.saveWeekForecast(event.data!);
+        });
+
+      yield* response;
     } on DioException catch (_) {
       rethrow;
     }

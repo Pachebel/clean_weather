@@ -14,10 +14,9 @@ class StartViewModel {
 
   ValueNotifier<WeatherDataModel?> get weekForecast => _weekForecast;
 
-  Future<void> getWeekForecast() async {
+  Stream<void> getWeekForecast() async* {
     final position = await GetCurrentPositionUseCase(positionService).call();
 
-    _weekForecast.value =
-        await GetWeekForecastUseCase(weatherRepository).call(position);
+    yield* GetWeekForecastUseCase(weatherRepository).call(position);
   }
 }

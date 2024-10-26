@@ -1,4 +1,4 @@
-import 'package:clean_weather/app/modules/core/data/api/api.dart';
+import 'package:clean_weather/app/modules/core/data/api/api_request.dart';
 import 'package:clean_weather/app/modules/core/data/services/geo_location_service.dart';
 import 'package:clean_weather/app/modules/core/data/services/local_storage_service.dart';
 import 'package:clean_weather/app/modules/core/data/source/local/local_weather_repository.dart';

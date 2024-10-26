@@ -42,3 +42,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 lib/app/modules/core/data/config/consts/weather_key.dart
+
+# FVM Version Cache
+.fvm/

@@ -30,7 +30,7 @@ class _StartViewState extends State<StartView> {
                 : RefreshIndicator.adaptive(
                     onRefresh: () async {
                       await Future<void>.delayed(const Duration(seconds: 1));
-                      return viewModel.getWeekForecast();
+                      viewModel.getWeekForecast();
                     },
                     child: ListView.builder(
                       itemCount: viewModel.weekForecast.value?.daily?.length,

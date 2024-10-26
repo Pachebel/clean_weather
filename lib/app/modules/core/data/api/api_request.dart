@@ -1,8 +1,9 @@
+import 'package:clean_weather/app/modules/core/data/api/api_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 abstract class ApiRequest {
-  Future<dynamic> get({
+  Stream<ApiResponse<T>> get<T>({
     required String url,
     Map<String, dynamic>? queryParameters,
   });
@@ -20,16 +21,26 @@ class ApiRequestImpl implements ApiRequest {
   final BaseOptions? options;
 
   @override
-  Future<dynamic> get({
+  Stream<ApiResponse<T>> get<T>({
     required String url,
     Map<String, dynamic>? queryParameters,
-  }) async {
+  }) async* {
+    final apiResponse = ApiResponse<T>();
+
     try {
       final response = await dio.get<dynamic>(
         url,
         queryParameters: queryParameters,
+        onReceiveProgress: (received, total) {
+          apiResponse.copyWith(
+            progress: received / total,
+          );
+        },
       );
-      return response.data;
+
+      yield apiResponse.copyWith(
+        data: response.data as T,
+      );
     } on DioException catch (_) {
       rethrow;
     }
@@ -57,7 +68,7 @@ class ApiRequestImpl implements ApiRequest {
 
   @override
   Future<dynamic> delete(String url) async {
-    try { 
+    try {
       final response = await dio.delete<dynamic>(url);
       return response.data;
     } on DioException catch (_) {

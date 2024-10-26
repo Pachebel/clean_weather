@@ -1,3 +1,4 @@
+import 'package:clean_weather/app/modules/core/data/api/api_response.dart';
 import 'package:clean_weather/app/modules/core/data/config/consts/storage_keys.dart';
 import 'package:clean_weather/app/modules/core/data/services/local_storage_service.dart';
 import 'package:clean_weather/app/modules/core/data/source/dtos/weather_data_dto.dart';
@@ -9,12 +10,15 @@ class LocalWeatherRepositoryImpl implements WeatherRepository {
   final LocalStorage _storage;
 
   @override
-  Future<WeatherDataDto> getWeekForecast(Position position) async {
+  Stream<ApiResponse<WeatherDataDto>> getWeekForecast(
+    Position position,
+  ) async* {
     final today = DateTime.now();
     final data = await _storage.read(StorageKeys.weekForecastKey(today));
 
-    if (data != null) return WeatherDataDto.fromJson(data);
-
+    if (data != null) {
+      yield ApiResponse(data: WeatherDataDto.fromJson(data));
+    }
     throw const FormatException();
   }
 
